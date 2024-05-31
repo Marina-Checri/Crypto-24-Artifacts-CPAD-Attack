@@ -133,6 +133,6 @@ And **[Library][Scheme]** are the library and scheme used to perform the attack.
 We would like to express our gratitude to the following individuals and resources for their assistance to this project:
 
 - **Antoine Choffrut**: We would like to thank our colleague Antoine Choffrut for providing key insights on HElib noise upper bound monitoring and blocked decryption mechanisms.
-- **France 2030 ANR Program**: This work was supported by the France 2030 ANR Project ANR-22-PECY-003 SecureCompute.
+- **France 2030 ANR Program**: This work was supported by the France 2030 ANR Projects ANR-22-PECY-003 SecureCompute and ANR-23-PECL-0009 TRUSTINCloudS.
 - **Horizon Europe Program**: This work was supported by the European Union’s Horizon Europe Research and Innovation Program ENCRYPT under Grant Agreement No. 101070670.
 - **OpenAI's GPT-3 Language Model**: We extend our appreciation to the GPT-3 model developed by OpenAI for providing guidance and assistance in creating the README files and Dockerfile configurations for this repository.
