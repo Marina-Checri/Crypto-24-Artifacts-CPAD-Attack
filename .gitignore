@@ -1,0 +1,20 @@
+#general rules
+*~
+*.o
+build
+
+#attack_helib
+
+#attack_lattigo
+attack_single-party/attack_lattigo/code/running_examples
+attack_multi-party/attack_threshold_lattigo/code/running_examples
+
+#attack_OpenFHE
+
+#attack_regev
+
+#attack_SEAL
+attack_single-party/attack_SEAL/code/running_examples
+
+#attack_tfheLib
+attack_single-party/attack_tfheLib/code/lwe.csv

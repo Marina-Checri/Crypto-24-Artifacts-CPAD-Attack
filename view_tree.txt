@@ -1,0 +1,37 @@
+.
+├── attack_multi-party
+│   ├── attack_threshold_lattigo
+│   │   ├── code/
+│   │   ├── Dockerfile
+│   │   ├── modified_lattigo/
+│   │   └── README.md
+│   └── attack_threshold_OpenFHE
+│       ├── code/
+│       ├── Dockerfile
+│       ├── modified_openfhe/
+│       └── README.md
+├── attack_single-party
+│   ├── attack_lattigo
+│   │   ├── code/
+│   │   ├── Dockerfile
+│   │   └── README.md
+│   ├── attack_OpenFHE
+│   │   ├── code/
+│   │   ├── Dockerfile
+│   │   └── README.md
+│   ├── attack_regev
+│   │   ├── code/
+│   │   ├── Dockerfile
+│   │   └── README.md
+│   ├── attack_SEAL
+│   │   ├── code/
+│   │   ├── Dockerfile
+│   │   ├── modified_SEAL/
+│   │   └── README.md
+│   └── attack_tfheLib
+│       ├── code/
+│       ├── Dockerfile
+│       └── README.md
+├── LICENSE.md
+├── README.md
+└── view_tree.txt
