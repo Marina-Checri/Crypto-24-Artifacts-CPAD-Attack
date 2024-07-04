@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y \
     time
 
 # Clone the OpenFHE official repository (version 1.1.4 of OpenFHE)
-RUN git clone https://github.com/openfheorg/openfhe-development.git
+#RUN git clone https://github.com/openfheorg/openfhe-development.git
+RUN git clone --branch v1.1.4 https://github.com/openfheorg/openfhe-development.git
 
 # Build and install OpenFHE
 WORKDIR /usr/src/app/openfhe-development

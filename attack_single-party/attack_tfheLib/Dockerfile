@@ -17,6 +17,10 @@ RUN apt-get update && apt-get install -y \
 # Clone the tfhe library from the official repository (version 1.1 of tfheLib)
 RUN git clone https://github.com/tfhe/tfhe.git
 
+# Checkout the specific commit (version 1.1 of tfheLib)
+WORKDIR /usr/src/app/tfhe
+RUN git checkout bc71bfae7ad9d5f8ce5f29bdfd691189bfe207f3
+
 # Build and install the tfhe library
 WORKDIR /usr/src/app/tfhe
 RUN mkdir build && cd build && cmake ../src -DENABLE_FFTW=on -DCMAKE_BUILD_TYPE=debug && make && make install

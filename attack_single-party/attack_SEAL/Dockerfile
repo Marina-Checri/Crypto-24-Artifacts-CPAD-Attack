@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
     make \
     time
 
-# Copy the SEAL library directory into the container (version 4.1 of SEAL)
+# Copy the SEAL library directory into the container (version 4.1.2 of SEAL)
+#RUN git clone --branch v4.1.2 https://github.com/microsoft/SEAL.git
 COPY modified_SEAL /usr/src/app/modified_SEAL
 
 # Build the SEAL library

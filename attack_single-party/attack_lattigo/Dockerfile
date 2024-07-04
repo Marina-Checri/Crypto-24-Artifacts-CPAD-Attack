@@ -27,7 +27,8 @@ RUN apt-get update && apt-get install -y \
     time
 
 # Clone the Lattigo repository from GitHub (version 5.0.2 of Lattigo)
-RUN git clone https://github.com/tuneinsight/lattigo.git
+#RUN git clone https://github.com/tuneinsight/lattigo.git
+RUN git clone --branch v5.0.2 https://github.com/tuneinsight/lattigo.git
 
 # Build Lattigo
 WORKDIR /usr/src/app/lattigo
