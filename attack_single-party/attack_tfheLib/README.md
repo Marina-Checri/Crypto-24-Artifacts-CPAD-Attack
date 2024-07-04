@@ -5,7 +5,7 @@ __WARNING.__  If you are connecting via a VPN you may run into trouble when buil
 ## Building the Docker image  
 Make sure to run the following command from the directory ``attack_tfheLib``, as it contains the file ``Dockerfile``:  
 ``` bash
-sudo docker build -t attack_tfhelib:0.1 .
+sudo docker buildx build -t attack_tfhelib:0.1 .
 ```
 
 ## Running a container  

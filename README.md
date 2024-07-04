@@ -67,6 +67,7 @@ Understanding the properties and complexity of the LWE problem is essential for 
 To build and run the artifacts in this repository, you will need the following dependencies:
 
 - Docker: Ensure you have Docker installed to build and run the containerized environments.
+- Docker Buildx: Install Docker Buildx to enable BuildKit for building images. This can be installed with the command line: `sudo docker buildx install`. Then, you will have to enable BuildKit, which can be done with the following command `export DOCKER_BUILDKIT=1`. __Note.__ Docker recommends using BuildKit as it is a modern and more efficient build system compared to the legacy Docker builder. The legacy Docker builder is deprecated and is expected to be removed in a future release.
 
 Each subdirectory contains a `Dockerfile` to set up the required environment for the respective library.
 
@@ -82,6 +83,7 @@ Each subdirectory contains a `Dockerfile` to set up the required environment for
   - **attack_threshold_lattigo**: Implementations of the attack on threshold BFV using the Lattigo library.
   - **attack_threshold_OpenFHE**: Implementations of the attack on threshold BFV using the OpenFHE library.
 - **README.md**: This file you're currently reading.
+- **build_all_dockerfiles.sh**: A bash script automating the process of building Docker images for each FHE library implementation.
 - **view_tree.txt**: A text file containing the tree structure of the repository.
 
 ## Getting Started
@@ -91,6 +93,29 @@ To get started with using or contributing to this repository, please refer to th
 Each attack implementation in this repository is designed to target a specific FHE library. Therefore, each directory contains a Dockerfile for setting up the necessary dependencies and environment. Simply follow the instructions provided in the README.md of each directory to launch the attack on the respective library.
 
 For example, to launch an attack on the OpenFHE library, navigate to the `attack_single-party/attack_OpenFHE` directory and follow the instructions in the README.md file.
+
+### Building all docker images at once with a script
+
+To facilitate the process of building Docker images for each FHE library implementation in this repository, we have provided a bash script (`build_all_dockerfiles.sh`) that automates the build process. This script iterates through designated directories containing Dockerfiles and builds Docker images for each library.
+
+This script simplifies the process of setting up the necessary environments to run and test the attacks implemented in this repository. Still, a user can prefer to build manually the docker container in each directory, especially if the user prefer to run the tests specific to a particular library. To do so, please refer to the README files in each attack folder for specific building instructions.
+
+#### How to use the script
+
+1. **Navigate to the Repository:** Ensure you are in the root directory of this repository where the script is located.
+2. **Make the Script Executable:** If not already executable, make the script executable using the following command:
+   ```bash
+   chmod +x build_all_dockerfiles.sh
+   ```
+3. **Run the Script:** Execute the script using the following command:
+   ```bash
+   sudo bash build_all_dockerfiles.sh
+   ```
+4. **Monitor Build Progress:** The script will sequentially build Docker images for each library specified in the designated directories. You will see output indicating the progress of each build.
+5. **Verify Docker Images:** After the script completes successfully, you can verify that Docker images for each library have been built by running:
+   ```
+   sudo docker images
+   ```
 
 ### Reading the Outputs
 

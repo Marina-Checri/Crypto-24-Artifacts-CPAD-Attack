@@ -7,12 +7,12 @@ __WARNING.__  If you are connecting via a VPN you may run into trouble when buil
 ## Building the Docker image  
 Make sure to run the following command from the directory ``attack_OpenFHE``, as it contains the file ``Dockerfile``:  
 ``` bash
-sudo docker build -t attack_openfhe:0.1 .
+sudo docker buildx build -t attack_openfhe:0.1 .
 ```
 
 ## Running a container  
 ``` bash
-sudo docker run --rm -it -v $(pwd):/attack_OpenFHE attack_openfhe:0.1
+sudo docker run --rm -it -v $(pwd):/attack_OpenFHE attack_openfhe:0.1 /bin/bash
 ```
 
 The rest of these instructions assumes you are working within a running container.
