@@ -29,10 +29,19 @@ The root directory for this project is ``attack_lattigo``.
 go build -o bfv_attack bfv_attack.go
 ```
 
-# Running experimentations  
+## Running experimentations  
 
 ```
 time ./bfv_attack
+```
+
+### Using the --no-verbose Option
+
+You can use the `--no-verbose` option to suppress the detailed output during the execution. When this option is used, the information for each ciphertext will not be displayed.
+
+To launch the attack without displaying detailed information for each ciphertext, run
+```
+time ./bfv_attack --no-verbose
 ```
 
 ## Modifying the code to use another strategy for the attack

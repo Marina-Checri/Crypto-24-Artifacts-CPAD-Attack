@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"math/big"
@@ -22,12 +23,14 @@ var number_of_evaluations int64
 var CHECK_FOUND_NOISE bool = true
 
 // Find the noise of one coefficient of a ciphertext c0 to get an equation b = <a,s> + |e| of this LWE coefficient. Search n linear equations for the LWE coefficient of a ciphertext, where  b' = <a',s> + |e'| such that e and e' have the same sign.
-func strategy0() {
+func strategy0(verbose bool) {
 
 	l := log.New(os.Stderr, "", 0)
 	var err error
 
-	l.Println("> Parameters Setting")
+	if verbose {
+		l.Println("> Parameters Setting")
+	}
 
 	// Creating encryption parameters
 
@@ -85,7 +88,9 @@ func strategy0() {
 	fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
 
 	// Key Generation
-	l.Println("> Key Generation")
+	if verbose {
+		l.Println("> Key Generation")
+	}
 
 	kgen := heint.NewKeyGenerator(params)
 	sk, pk := kgen.GenKeyPairNew()
@@ -135,8 +140,9 @@ func strategy0() {
 	string_true_noise = true_noise_to_string(noise, t)
 	string_found_noise = found_noise_to_string(e0)
 	correct_noise = is_correct_noise(noise, e0, t, false)
-	print_attack_progress("BFV", string_true_noise, string_found_noise, len(e0), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, int(params.N()))
-
+	if verbose {
+		print_attack_progress("BFV", string_true_noise, string_found_noise, len(e0), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, int(params.N()))
+	}
 	if CHECK_FOUND_NOISE {
 		if correct_noise {
 			ciphertexts_which_noise_has_been_found = ciphertexts_which_noise_has_been_found + 1
@@ -177,7 +183,9 @@ func strategy0() {
 			string_true_noise = true_noise_to_string(noise, t)
 			string_found_noise = found_noise_to_string(e1)
 			correct_noise = is_correct_noise(noise, e1, t, false)
-			print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, int(params.N()))
+			if verbose {
+				print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, int(params.N()))
+			}
 
 			if CHECK_FOUND_NOISE {
 				if correct_noise {
@@ -230,7 +238,9 @@ func strategy0() {
 					string_true_noise = true_noise_to_string(noise, t)
 					string_found_noise = found_noise_to_string(e1)
 					correct_noise = is_correct_noise(noise, e1, t, false)
-					print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, int(params.N()))
+					if verbose {
+						print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, int(params.N()))
+					}
 
 					if CHECK_FOUND_NOISE {
 						if correct_noise {
@@ -248,7 +258,9 @@ func strategy0() {
 					string_true_noise = true_noise_to_string(noise, t)
 					string_found_noise = found_noise_to_string(e1)
 					correct_noise = is_correct_noise(noise, e1, t, false)
-					print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), false, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, int(params.N()))
+					if verbose {
+						print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), false, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, int(params.N()))
+					}
 
 					if CHECK_FOUND_NOISE {
 						if correct_noise {
@@ -271,7 +283,7 @@ func strategy0() {
 }
 
 // Find n noiseless LWE coefficients of different ciphertexts to get n linear equations b = <a,s>.
-func strategy1() {
+func strategy1(verbose bool) {
 
 	l := log.New(os.Stderr, "", 0)
 	var err error
@@ -363,7 +375,9 @@ func strategy1() {
 		string_true_noise = true_noise_to_string(noise, t)
 		string_found_noise = found_noise_to_string(e1)
 		correct_noise = is_correct_noise(noise, e1, t, false)
-		print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, int(params.N()))
+		if verbose {
+			print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, int(params.N()))
+		}
 
 		if CHECK_FOUND_NOISE {
 			if correct_noise {
@@ -399,7 +413,7 @@ cally, we adapted our attack.
 With this slight adaptation, we still determine the n equations needed to find
 the secret key."
 */
-func strategy2() {
+func strategy2(verbose bool) {
 
 	l := log.New(os.Stderr, "", 0)
 	var err error
@@ -501,7 +515,9 @@ func strategy2() {
 		//Bingo!
 		string_true_noise = true_noise_to_string(noise, t)
 		string_found_noise = found_noise_to_string(e0)
-		print_attack_progress("BFV", string_true_noise, string_found_noise, len(e0), true, false, false, max(ciphertexts_which_noise_has_been_found+1, number_of_sign_mismatch+1), int(params.N()))
+		if verbose {
+			print_attack_progress("BFV", string_true_noise, string_found_noise, len(e0), true, false, false, max(ciphertexts_which_noise_has_been_found+1, number_of_sign_mismatch+1), int(params.N()))
+		}
 
 		ciphertexts_which_noise_has_been_found = ciphertexts_which_noise_has_been_found + 1
 		number_of_fully_identified_noises = number_of_fully_identified_noises + 1
@@ -512,7 +528,9 @@ func strategy2() {
 		//Bingo!
 		string_true_noise = true_noise_to_string(noise, t)
 		string_found_noise = found_noise_to_string(e0)
-		print_attack_progress("BFV", string_true_noise, string_found_noise, len(e0), true, false, false, max(ciphertexts_which_noise_has_been_found+1, number_of_sign_mismatch+1), int(params.N()))
+		if verbose {
+			print_attack_progress("BFV", string_true_noise, string_found_noise, len(e0), true, false, false, max(ciphertexts_which_noise_has_been_found+1, number_of_sign_mismatch+1), int(params.N()))
+		}
 
 		ciphertexts_which_noise_has_been_found = ciphertexts_which_noise_has_been_found + 1
 
@@ -553,7 +571,9 @@ func strategy2() {
 			//Bingo!
 			string_true_noise = true_noise_to_string(noise, t)
 			string_found_noise = found_noise_to_string(e1)
-			print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, false, false, max(ciphertexts_which_noise_has_been_found+1, number_of_sign_mismatch+1), int(params.N()))
+			if verbose {
+				print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, false, false, max(ciphertexts_which_noise_has_been_found+1, number_of_sign_mismatch+1), int(params.N()))
+			}
 
 			ciphertexts_which_noise_has_been_found = ciphertexts_which_noise_has_been_found + 1
 			number_of_fully_identified_noises = number_of_fully_identified_noises + 1
@@ -596,7 +616,9 @@ func strategy2() {
 						//Bingo!
 						string_true_noise = true_noise_to_string(noise, t)
 						string_found_noise = found_noise_to_string(e1)
-						print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, false, false, max(ciphertexts_which_noise_has_been_found+1, number_of_sign_mismatch+1), int(params.N()))
+						if verbose {
+							print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, false, false, max(ciphertexts_which_noise_has_been_found+1, number_of_sign_mismatch+1), int(params.N()))
+						}
 
 						ciphertexts_which_noise_has_been_found = ciphertexts_which_noise_has_been_found + 1
 						number_of_fully_identified_noises = number_of_fully_identified_noises + 1
@@ -607,7 +629,9 @@ func strategy2() {
 						//Bingo!
 						string_true_noise = true_noise_to_string(noise, t)
 						string_found_noise = found_noise_to_string(e1)
-						print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, false, false, max(ciphertexts_which_noise_has_been_found+1, number_of_sign_mismatch+1), int(params.N()))
+						if verbose {
+							print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), true, false, false, max(ciphertexts_which_noise_has_been_found+1, number_of_sign_mismatch+1), int(params.N()))
+						}
 
 						ciphertexts_which_noise_has_been_found = ciphertexts_which_noise_has_been_found + 1
 						true_noises_same_sign = append(true_noises_same_sign, noise)
@@ -619,7 +643,9 @@ func strategy2() {
 						//Sign mismatch!
 						string_true_noise = true_noise_to_string(noise, t)
 						string_found_noise = found_noise_to_string(e1)
-						print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), false, false, false, max(ciphertexts_which_noise_has_been_found, number_of_sign_mismatch), int(params.N()))
+						if verbose {
+							print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), false, false, false, max(ciphertexts_which_noise_has_been_found, number_of_sign_mismatch), int(params.N()))
+						}
 
 						number_of_fully_identified_noises = number_of_fully_identified_noises + 1
 						number_of_sign_mismatch = number_of_sign_mismatch + 1
@@ -631,7 +657,9 @@ func strategy2() {
 						//Sign mismatch!
 						string_true_noise = true_noise_to_string(noise, t)
 						string_found_noise = found_noise_to_string(e1)
-						print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), false, false, false, max(ciphertexts_which_noise_has_been_found, number_of_sign_mismatch), int(params.N()))
+						if verbose {
+							print_attack_progress("BFV", string_true_noise, string_found_noise, len(e1), false, false, false, max(ciphertexts_which_noise_has_been_found, number_of_sign_mismatch), int(params.N()))
+						}
 
 						number_of_sign_mismatch = number_of_sign_mismatch + 1
 
@@ -1020,7 +1048,14 @@ func noiseAbsEstim(params heint.Parameters, pk *rlwe.PublicKey, sk *rlwe.SecretK
 }
 
 func main() {
-	strategy0()
-	//strategy1()
-	//strategy2()
+	// Define the --no-verbose flag
+	noVerbose := flag.Bool("no-verbose", false, "Set to disable verbose mode")
+	flag.Parse()
+
+	// By default, verbose is true, unless --no-verbose is specified
+	verbose := !*noVerbose
+
+	strategy0(verbose)
+	//strategy1(verbose)
+	//strategy2(verbose)
 }
