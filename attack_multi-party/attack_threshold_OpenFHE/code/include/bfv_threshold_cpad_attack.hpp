@@ -16,7 +16,7 @@
 #include <boost/multiprecision/cpp_int.hpp>
 namespace mp = boost::multiprecision;
 
-#define DEBUG 1
+#define DEBUG 0
 
 #define RING_DIMENSION 8192 //16384//8192//4096
 #define PT_MODULUS 1024     //65537//33832961//134250497//132120577
@@ -35,7 +35,7 @@ using namespace std::chrono_literals;
 
 // Find the noise of one coefficient of a ciphertext c0 to get an equation b = <a,s> + |e| of this LWE coefficient. Search n linear equations for the LWE coefficient of a ciphertext, where  b' = <a',s> + |e'| such that e and e' have the same sign.
 void 
-strategy0();
+strategy0(bool verbose=true);
 
 /* Other useful functions */
 

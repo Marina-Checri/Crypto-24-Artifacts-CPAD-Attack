@@ -35,13 +35,21 @@ make
 
 > Note: if the repertory `build/` already exists, you may have to delete it and recreate it in the docker image.
 
-# Running experimentations  
+## Running experimentations  
 
 To launch the attack using ThHE BFV, run
 ```
 time ./bfv_threshold_attack_exe
 ```
 
+### Using the --no-verbose Option
+
+You can use the `--no-verbose` option to suppress the detailed output during the execution. When this option is used, the information for each ciphertext will not be displayed.
+
+To launch the attack without displaying detailed information for each ciphertext, run
+```
+time ./bfv_threshold_attack_exe --no-verbose
+```
 
 ## Modifying OpenFHE lib
 
