@@ -24,13 +24,21 @@ cd code/src/
 The root directory for this project is ``attack_regev``.
 
 
-# Running experimentations  
+## Running experimentations  
 
 To run the project, use
 ```
 python3 regevcpad.py
 ```
 
+### Using the --no-verbose Option
+
+You can use the `--no-verbose` option to suppress the detailed output during the execution. When this option is used, the information for each ciphertext will not be displayed.
+
+To launch the attack without displaying detailed information for each ciphertext, run
+```
+python3 regevcpad.py --no-verbose
+```
 
 ## Modifying the code to use another strategy for the attack
 

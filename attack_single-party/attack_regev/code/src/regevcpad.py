@@ -1,6 +1,7 @@
 import sys
 import math
 import random
+import argparse
 from fractions import Fraction
 
 def randvec(a, b, n):
@@ -116,7 +117,7 @@ def print_attack_progress(lib, scheme, true_noise, found_noise, found_noise_size
 # to get an equation b = <a,s> + |e| of this LWE coefficient.
 # Search n linear equations for the LWE coefficient of a ciphertext,
 # where  b' = <a',s> + |e'| such that e and e' have the same sign.
-def strategy0(reg):
+def strategy0(reg, verbose):
     N = 0
     M = 1
     c0 = reg.encrypt(0)
@@ -131,7 +132,8 @@ def strategy0(reg):
     a0 = aca0[0]
     ca0 = aca0[1]
     real_noise_0 = reg.forbiddenGetNoiseOfEnc0(c0)
-    print_attack_progress('In-house lib', 'Regev', real_noise_0, str(e0), len(e0), True, False, False, N, reg.n)
+    if(verbose):
+        print_attack_progress('In-house lib', 'Regev', real_noise_0, str(e0), len(e0), True, False, False, N, reg.n)
     N = N + 1
 
     while N < reg.n:
@@ -139,7 +141,7 @@ def strategy0(reg):
         M = M + 1
         aca1 = []
         e1 = noiseAbsEstim(c1, reg, aca1)
-        
+
         while len(e1) > 1:
             c1 = reg.encrypt(0)
             e1 = noiseAbsEstim(c1, reg, aca1)
@@ -149,17 +151,20 @@ def strategy0(reg):
         ca1 = aca1[1]
         if e1[0] == 0:
             real_noise_1 = reg.forbiddenGetNoiseOfEnc0(c1)
-            print_attack_progress('In-house lib', 'Regev', real_noise_1, str(e1), len(e1), True, False, False, N, reg.n)
+            if(verbose):
+                print_attack_progress('In-house lib', 'Regev', real_noise_1, str(e1), len(e1), True, False, False, N, reg.n)
             N = N + 1
         elif e0[0] * a0 + e1[0] * a1 > reg.q / 4:
             cz = reg.add(ca0, ca1)
             if reg.decrypt(cz) == 1:
                 real_noise_1 = reg.forbiddenGetNoiseOfEnc0(c1)
-                print_attack_progress('In-house lib', 'Regev', real_noise_1, str(e1), len(e1), True, False, False, N, reg.n)
+                if(verbose):
+                    print_attack_progress('In-house lib', 'Regev', real_noise_1, str(e1), len(e1), True, False, False, N, reg.n)
                 N = N + 1
             else:
                 real_noise_1 = reg.forbiddenGetNoiseOfEnc0(c1)
-                print_attack_progress('In-house lib', 'Regev', real_noise_1, str(e1), len(e1), False, False, False, N, reg.n)
+                if(verbose):
+                    print_attack_progress('In-house lib', 'Regev', real_noise_1, str(e1), len(e1), False, False, False, N, reg.n)
 
     print(f'\033[7;33m> {N} linear equations have been found! <\033[0m');
     print(f'\033[1;33m[In-house lib][Regev] number of ciphertexts generated: \033[0m {M}');
@@ -167,7 +172,7 @@ def strategy0(reg):
 
 # Find n noiseless LWE coefficients of different ciphertexts
 # to get n linear equations b = <a,s>.
-def strategy1(reg):
+def strategy1(reg, verbose):
     M = 0
     N = 0
     while N < reg.n:
@@ -175,28 +180,34 @@ def strategy1(reg):
         M = M + 1
         aca1 = []
         e1 = noiseAbsEstim(c1, reg, aca1)
-        
+
         while len(e1) > 1 or e1[0] != 0:
             c1 = reg.encrypt(0)
             M = M + 1
             e1 = noiseAbsEstim(c1, reg, aca1)
             real_noise_1 = reg.forbiddenGetNoiseOfEnc0(c1)
 
-        print_attack_progress('In-house lib', 'Regev', real_noise_1, str(e1), len(e1), True, False, False, N, reg.n)
+        if(verbose):
+            print_attack_progress('In-house lib', 'Regev', real_noise_1, str(e1), len(e1), True, False, False, N, reg.n)
         N = N + 1
     print(f'\033[7;33m> {N} linear equations have been found! <\033[0m');
     print(f'\033[1;33m[In-house lib][Regev] number of ciphertexts generated: \033[0m {M}');
 
-if __name__ == '__main__':
+def main():
+    parser = argparse.ArgumentParser(description="Process some integers.")
+    parser.add_argument('--no-verbose', action='store_false', dest='verbose', default=True, help='Run without verbose output')
+
+    args = parser.parse_args()
+
     strategy=0
     #Toy params
     #reg=Regev(10,127,7)
     # Weak TFHE params
-    #reg=Regev(636,2**32,2**17)
+    reg=Regev(636,2**32,2**17)
     # TFHE params
     #reg=Regev(1024,2**32,2**17)
     # OpenFHE's params
-    reg=Regev(8192,2**240,3.19)
+    #reg=Regev(8192,2**240,3.19)
     #reg.print()
 
     for i in range(10):
@@ -210,12 +221,15 @@ if __name__ == '__main__':
         print("*********************************************")
         print("**************** STRATEGY 0 *****************")
         print("*********************************************\n")
-        strategy0(reg)
+        strategy0(reg, args.verbose)
 
     elif strategy == 1:
         print("*********************************************")
         print("**************** STRATEGY 1 *****************")
         print("*********************************************\n")
-        strategy1(reg)
+        strategy1(reg, args.verbose)
     else:
         print('No strategy chosen...')
+
+if __name__ == '__main__':
+    main()
