@@ -3,7 +3,7 @@
 static uint64_t number_of_evaluations = 0;
 static uint64_t number_of_decryptions = 0;
 
-void strategy0(){
+void strategy0(bool verbose){
 
   cout << "\n*********************************************\n"
        << "**************** STRATEGY 0 *****************"
@@ -100,7 +100,7 @@ void strategy0(){
   string_true_noise = true_noise_to_string(noise, coeff_modulus_q0);
   string_found_noise = found_noise_to_string(e0, coeff_modulus_q0);
   correct_noise = is_correct_noise(noise, e0, coeff_modulus_q0, false);
-  print_attack_progress("BFV", string_true_noise, string_found_noise, e0.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
+  if(verbose) print_attack_progress("BFV", string_true_noise, string_found_noise, e0.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
 
   if(CHECK_FOUND_NOISE){
     if(correct_noise){
@@ -141,7 +141,7 @@ void strategy0(){
       string_true_noise = true_noise_to_string(noise, coeff_modulus_q0);
       string_found_noise = found_noise_to_string(e1, coeff_modulus_q0);
       correct_noise = is_correct_noise(noise, e1, coeff_modulus_q0, false);
-      print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
+      if(verbose) print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
 
       if(CHECK_FOUND_NOISE){
         if(correct_noise){
@@ -171,7 +171,7 @@ void strategy0(){
           string_true_noise = true_noise_to_string(noise, coeff_modulus_q0);
           string_found_noise = found_noise_to_string(e1, coeff_modulus_q0);
           correct_noise = is_correct_noise(noise, e1, coeff_modulus_q0, false);
-          print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
+          if(verbose) print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
 
           if(CHECK_FOUND_NOISE){
             if(correct_noise){
@@ -189,7 +189,7 @@ void strategy0(){
           string_true_noise = true_noise_to_string(noise, coeff_modulus_q0);
           string_found_noise = found_noise_to_string(e1, coeff_modulus_q0);
           correct_noise = is_correct_noise(noise, e1, coeff_modulus_q0, false);
-          print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), false, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, n);
+          if(verbose) print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), false, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, n);
 
           if(CHECK_FOUND_NOISE){
             if(correct_noise){
@@ -212,7 +212,7 @@ void strategy0(){
 }
 
 
-void strategy1(){
+void strategy1(bool verbose){
   cout << "\n*********************************************\n"
        << "**************** STRATEGY 1 *****************"
        <<"\n*********************************************\n\n";
@@ -308,7 +308,7 @@ void strategy1(){
     string_true_noise = true_noise_to_string(noise, coeff_modulus_q0);
     string_found_noise = found_noise_to_string(e1, coeff_modulus_q0);
     correct_noise = is_correct_noise(noise, e1, coeff_modulus_q0, false);
-    print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
+    if(verbose) print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
 
     if(CHECK_FOUND_NOISE){
       if(correct_noise) ++ciphertexts_which_noise_has_been_found;

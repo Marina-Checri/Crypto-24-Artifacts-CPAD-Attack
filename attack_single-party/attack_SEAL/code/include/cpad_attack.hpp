@@ -33,9 +33,9 @@ using namespace seal;
    Find n noiseless LWE coefficients of different ciphertexts to get n linear equations b = <a,s>.
 */
 
-void strategy0();
+void strategy0(bool verbose=true);
 
-void strategy1();
+void strategy1(bool verbose=true);
 
 /* Other useful functions */
 
