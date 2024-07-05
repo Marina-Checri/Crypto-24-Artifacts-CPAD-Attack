@@ -18,6 +18,8 @@ import (
 	"github.com/tuneinsight/lattigo/v5/utils"
 )
 
+var DEBUG bool = false
+
 type party struct {
 	sk         *rlwe.SecretKey
 	rlkEphemSk *rlwe.SecretKey
@@ -82,16 +84,18 @@ func strategy0(verbose bool) {
 	q := params.Q()[0]
 	t := params.PlaintextModulus()
 
-	fmt.Println("BFV Parameters:")
-	fmt.Printf("params: %v\n\n", params)
-	fmt.Printf("N: %v\n", params.N())
-	fmt.Printf("log_2(q) = %v\n", params.LogQ())
-	fmt.Printf("log_2(p) = %v\n", params.LogP())
-	fmt.Printf("log_2(qp) = %v\n", params.LogQP())
-	fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
-	fmt.Printf("\nSIGMA_SMUDGING = %v\n\n", SIGMA_SMUDGING)
+	if DEBUG {
+		fmt.Println("BFV Parameters:")
+		fmt.Printf("params: %v\n\n", params)
+		fmt.Printf("N: %v\n", params.N())
+		fmt.Printf("log_2(q) = %v\n", params.LogQ())
+		fmt.Printf("log_2(p) = %v\n", params.LogP())
+		fmt.Printf("log_2(qp) = %v\n", params.LogQP())
+		fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
+	}
+	fmt.Printf("SIGMA_SMUDGING = %v\n", SIGMA_SMUDGING)
+	fmt.Printf("Number of parties = %d\n", nb_parties)
 
-	fmt.Printf("\nNumber of parties = %d\n\n", nb_parties)
 	// Key Generation
 	if verbose {
 		l.Println("> Key Generation")
@@ -110,6 +114,14 @@ func strategy0(verbose bool) {
 	evaluator := heint.NewEvaluator(params, evk)
 
 	level := params.MaxLevel()
+
+	// Parameters of the scheme
+
+	fmt.Printf("\033[7;33m\n> Parameters of the scheme <\033[0m\n")
+	fmt.Printf("\033[1;33m[Lattigo][BFV ThHE] n        = \033[0m%d\n", params.N())
+	fmt.Printf("\033[1;33m[Lattigo][BFV ThHE] log_2(q) = \033[0m%.2f\n", params.LogQP())
+	fmt.Printf("\033[1;33m[Lattigo][BFV ThHE] sigma    = \033[0m%.1f\n", 3.2)
+	fmt.Printf("\033[1;33m[Lattigo][BFV ThHE] t        = \033[0m%d\n\n", t)
 
 	// Attack
 
@@ -289,6 +301,14 @@ func strategy0(verbose bool) {
 				}
 			}
 		}
+	}
+
+	if verbose {
+		fmt.Printf("\033[7;33m> Parameters of the scheme <\033[0m\n")
+		fmt.Printf("\033[1;33m[Lattigo][BFV ThHE] n        = \033[0m%d\n", params.N())
+		fmt.Printf("\033[1;33m[Lattigo][BFV ThHE] log_2(q) = \033[0m%.2f\n", params.LogQP())
+		fmt.Printf("\033[1;33m[Lattigo][BFV ThHE] sigma    = \033[0m%.1f\n", 3.2)
+		fmt.Printf("\033[1;33m[Lattigo][BFV ThHE] t        = \033[0m%d\n\n", t)
 	}
 
 	fmt.Printf("\033[7;33m> %d linear equations have been found! <\033[0m\n", ciphertexts_which_noise_has_been_found)
