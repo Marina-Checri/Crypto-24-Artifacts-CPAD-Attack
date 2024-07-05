@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"math/big"
@@ -37,7 +38,7 @@ var SIGMA_SMUDGING float64 = 0
 //SIGMA_SMUDGING 1<<30 //= 1.073741824e+09 = 2^30
 
 // Find the noise of one coefficient of a ciphertext c0 to get an equation b = <a,s> + |e| of this LWE coefficient. Search n linear equations for the LWE coefficient of a ciphertext, where  b' = <a',s> + |e'| such that e and e' have the same sign.
-func strategy0() {
+func strategy0(verbose bool) {
 
 	nb_parties := 5
 	//nb_parties := 100
@@ -45,7 +46,9 @@ func strategy0() {
 	l := log.New(os.Stderr, "", 0)
 	var err error
 
-	l.Println("> Parameters Setting")
+	if verbose {
+		l.Println("> Parameters Setting")
+	}
 
 	PN12QP101pq := heint.ParametersLiteral{ // LogQP = 101.00005709794536
 		LogN:             12,
@@ -90,7 +93,9 @@ func strategy0() {
 
 	fmt.Printf("\nNumber of parties = %d\n\n", nb_parties)
 	// Key Generation
-	l.Println("> Key Generation")
+	if verbose {
+		l.Println("> Key Generation")
+	}
 
 	//kgen := heint.NewKeyGenerator(params)
 	//tsk, tpk := kgen.GenKeyPair()
@@ -144,7 +149,9 @@ func strategy0() {
 	string_true_noise = true_noise_to_string(noise, t)
 	string_found_noise = found_noise_to_string(e0)
 	correct_noise = is_correct_noise(noise, e0, t, false)
-	print_attack_progress("BFV ThHE", string_true_noise, string_found_noise, len(e0), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, int(params.N()))
+	if verbose {
+		print_attack_progress("BFV ThHE", string_true_noise, string_found_noise, len(e0), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, int(params.N()))
+	}
 
 	if CHECK_FOUND_NOISE {
 		if correct_noise {
@@ -188,8 +195,9 @@ func strategy0() {
 			string_true_noise = true_noise_to_string(noise, t)
 			string_found_noise = found_noise_to_string(e1)
 			correct_noise = is_correct_noise(noise, e1, t, false)
-			print_attack_progress("BFV ThHE", string_true_noise, string_found_noise, len(e1), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, int(params.N()))
-
+			if verbose {
+				print_attack_progress("BFV ThHE", string_true_noise, string_found_noise, len(e1), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, int(params.N()))
+			}
 			if CHECK_FOUND_NOISE {
 				if correct_noise {
 					ciphertexts_which_noise_has_been_found = ciphertexts_which_noise_has_been_found + 1
@@ -247,7 +255,9 @@ func strategy0() {
 					string_true_noise = true_noise_to_string(noise, t)
 					string_found_noise = found_noise_to_string(e1)
 					correct_noise = is_correct_noise(noise, e1, t, false)
-					print_attack_progress("BFV ThHE", string_true_noise, string_found_noise, len(e1), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, int(params.N()))
+					if verbose {
+						print_attack_progress("BFV ThHE", string_true_noise, string_found_noise, len(e1), true, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, int(params.N()))
+					}
 
 					if CHECK_FOUND_NOISE {
 						if correct_noise {
@@ -265,7 +275,9 @@ func strategy0() {
 					string_true_noise = true_noise_to_string(noise, t)
 					string_found_noise = found_noise_to_string(e1)
 					correct_noise = is_correct_noise(noise, e1, t, false)
-					print_attack_progress("BFV ThHE", string_true_noise, string_found_noise, len(e1), false, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, int(params.N()))
+					if verbose {
+						print_attack_progress("BFV ThHE", string_true_noise, string_found_noise, len(e1), false, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, int(params.N()))
+					}
 
 					if CHECK_FOUND_NOISE {
 						if correct_noise {
@@ -575,7 +587,14 @@ func noiseAbsEstim(params heint.Parameters, pk *rlwe.PublicKey, c0 *rlwe.Ciphert
 }
 
 func main() {
-	strategy0()
+	// Define the --no-verbose flag
+	noVerbose := flag.Bool("no-verbose", false, "Set to disable verbose mode")
+	flag.Parse()
+
+	// By default, verbose is true, unless --no-verbose is specified
+	verbose := !*noVerbose
+
+	strategy0(verbose)
 }
 
 func genparties(params heint.Parameters, N int) []*party {

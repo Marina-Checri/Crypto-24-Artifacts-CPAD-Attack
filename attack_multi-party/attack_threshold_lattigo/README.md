@@ -36,12 +36,20 @@ The root directory for this project is ``attack_threshold_lattigo``.
 go build -o bfv_threshold_attack_exe bfv_threshold_attack.go
 ```
 
-# Running experimentations  
+## Running experimentations  
 
 ```
 time ./bfv_threshold_attack_exe
 ```
 
+### Using the --no-verbose Option
+
+You can use the `--no-verbose` option to suppress the detailed output during the execution. When this option is used, the information for each ciphertext will not be displayed.
+
+To launch the attack without displaying detailed information for each ciphertext, run
+```
+time ./bfv_threshold_attack_exe --no-verbose
+```
 
 ## Modifying Lattigo lib
 
