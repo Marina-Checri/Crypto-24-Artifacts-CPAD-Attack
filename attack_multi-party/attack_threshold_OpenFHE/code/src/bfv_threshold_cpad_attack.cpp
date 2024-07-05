@@ -57,6 +57,14 @@ void strategy0(bool verbose){
     if(DEBUG) std::cout << "Key generation: done\n";
     if(DEBUG) std::cout << "Number of parties:" << NB_USERS << ". Number of keys generated:" << keyPairs.size() << "\n";
 
+    // Parameters of the scheme
+
+    std::cout << "\033[7;33m> Parameters of the scheme <\033[0m" << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV ThHE] " << " n        = " << "\033[0m"<< cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2 << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV ThHE] " << " log_2(q) = " << "\033[0m"<< log2(cc->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble()) << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV ThHE] " << " sigma    = " << "\033[0m"<< 3.19 << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV ThHE] " << " t        = " << "\033[0m"<< cc->GetCryptoParameters()->GetPlaintextModulus() << "\n\n";
+
     // Attack
 
     int generated_ciphertexts=0;
@@ -205,6 +213,15 @@ void strategy0(bool verbose){
       }
     }
   }
+
+  if(verbose){
+    std::cout << "\033[7;33m> Parameters of the scheme <\033[0m" << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV ThHE] " << " n        = " << "\033[0m"<< cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2 << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV ThHE] " << " log_2(q) = " << "\033[0m"<< log2(cc->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble()) << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV ThHE] " << " sigma    = " << "\033[0m"<< 3.19 << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV ThHE] " << " t        = " << "\033[0m"<< cc->GetCryptoParameters()->GetPlaintextModulus() << "\n\n";
+  }
+
   std::cout << "\033[7;33m> " << ciphertexts_which_noise_has_been_found << " linear equations have been found! <\033[0m" << "\n";
   std::cout << "\033[1;33m[OpenFHE][BFV ThHE] " << "number of ciphertexts generated: " << "\033[0m"<< generated_ciphertexts << "\n";
   std::cout << "\033[1;33m[OpenFHE][BFV ThHE] " << "number of noiseless samples: " << "\033[0m"<< number_of_noiseless << "/" << generated_ciphertexts << "\n";
