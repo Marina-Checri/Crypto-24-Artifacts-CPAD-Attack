@@ -288,7 +288,9 @@ func strategy1(verbose bool) {
 	l := log.New(os.Stderr, "", 0)
 	var err error
 
-	l.Println("> Parameters Setting")
+	if verbose {
+		l.Println("> Parameters Setting")
+	}
 
 	// Creating encryption parameters
 	// LogN = 12 & LogQP = 109
@@ -323,7 +325,9 @@ func strategy1(verbose bool) {
 	fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
 
 	// Key Generation
-	l.Println("> Key Generation")
+	if verbose {
+		l.Println("> Key Generation")
+	}
 
 	kgen := heint.NewKeyGenerator(params)
 	sk, pk := kgen.GenKeyPairNew()
@@ -418,7 +422,9 @@ func strategy2(verbose bool) {
 	l := log.New(os.Stderr, "", 0)
 	var err error
 
-	l.Println("> Parameters Setting")
+	if verbose {
+		l.Println("> Parameters Setting")
+	}
 
 	// Creating encryption parameters
 	// LogN = 13 & LogQP = 218
@@ -454,7 +460,9 @@ func strategy2(verbose bool) {
 	fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
 
 	// Key Generation
-	l.Println("> Key Generation")
+	if verbose {
+		l.Println("> Key Generation")
+	}
 
 	kgen := heint.NewKeyGenerator(params)
 	sk, pk := kgen.GenKeyPairNew()
@@ -523,7 +531,9 @@ func strategy2(verbose bool) {
 		number_of_fully_identified_noises = number_of_fully_identified_noises + 1
 	}
 	if len(e0) == 2 {
-		fmt.Printf("\033[36m> Trying 2 systems of linear equations - 1st sign <\033[39m\n")
+		if verbose {
+			fmt.Printf("\033[36m> Trying 2 systems of linear equations - 1st sign <\033[39m\n")
+		}
 
 		//Bingo!
 		string_true_noise = true_noise_to_string(noise, t)
@@ -624,7 +634,9 @@ func strategy2(verbose bool) {
 						number_of_fully_identified_noises = number_of_fully_identified_noises + 1
 					}
 					if len(e1) == 2 {
-						fmt.Printf("\033[36m> Trying 2 systems of linear equations  - 1st sign <\033[39m\n")
+						if verbose {
+							fmt.Printf("\033[36m> Trying 2 systems of linear equations  - 1st sign <\033[39m\n")
+						}
 
 						//Bingo!
 						string_true_noise = true_noise_to_string(noise, t)
@@ -652,7 +664,9 @@ func strategy2(verbose bool) {
 					}
 
 					if len(e1) == 2 {
-						fmt.Printf("\033[35m> Trying 2 systems of linear equations? - 2nd sign <\033[39m\n")
+						if verbose {
+							fmt.Printf("\033[35m> Trying 2 systems of linear equations? - 2nd sign <\033[39m\n")
+						}
 
 						//Sign mismatch!
 						string_true_noise = true_noise_to_string(noise, t)
