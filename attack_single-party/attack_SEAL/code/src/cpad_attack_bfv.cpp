@@ -18,16 +18,17 @@ void strategy0(bool verbose){
     sec_level = sec_level_type::tc192;
   if(SECURITY_LEVEL==256)
     sec_level = sec_level_type::tc256;
-  cout << "Security Level: " << SECURITY_LEVEL << endl; 
+  if(DEBUG) cout << "Security Level: " << SECURITY_LEVEL << endl;
     
   parms.set_coeff_modulus(CoeffModulus::BFVDefault(POLY_MODULUS_DEGREE, sec_level));
   parms.set_plain_modulus(PLAIN_MODULUS);
   SEALContext context(parms, false, sec_level);
 
-  cout << "Set encryption parameters and print" << endl;
-  print_parameters(context);
-  cout << "Parameter validation (success): " << context.parameter_error_message() << endl;
-
+  if(DEBUG){
+    cout << "Set encryption parameters and print" << endl;
+    print_parameters(context);
+    cout << "Parameter validation (success): " << context.parameter_error_message() << endl;
+  }
   uint64_t n = parms.poly_modulus_degree();
   uint128_t q;
   uint128_t coeff_modulus_q0;
@@ -43,9 +44,11 @@ void strategy0(bool verbose){
     q = ((uint128_t)1) <<58;
     coeff_modulus_q0 = 0x3ffffffff040001;
   }
-  cout<< "n = "<< n <<"\n";
-  cout<< "q = "<< q <<"\n";
-  cout<< "coeff_modulus_q0 = "<< coeff_modulus_q0 <<"\n\n";
+  if(DEBUG){
+    cout<< "n = "<< n <<"\n";
+    cout<< "q = "<< q <<"\n";
+    cout<< "coeff_modulus_q0 = "<< coeff_modulus_q0 <<"\n\n";
+  }
   //SECURITY 256 - { 4096, { 0x3ffffffff040001 } },
   //SECURITY 192 - { 4096, { 0x1ffc001, 0x1fce001, 0x1fc0001 } },
   //SECURITY 128 - { 4096, { 0xffffee001, 0xffffc4001, 0x1ffffe0001 } },
@@ -61,6 +64,14 @@ void strategy0(bool verbose){
   Evaluator evaluator(context);
   Decryptor decryptor(context, secret_key);
   
+  /* Parameters of the scheme */
+
+  std::cout << "\033[7;33m> Parameters of the scheme <\033[0m" << "\n";
+  std::cout << "\033[1;33m[SEAL][BFV] " << " n        = " << "\033[0m"<< n << "\n";
+  std::cout << "\033[1;33m[SEAL][BFV] " << " log_2(q) = " << "\033[0m"<< log2(q) << "\n";
+  std::cout << "\033[1;33m[SEAL][BFV] " << " sigma    = " << "\033[0m"<< 3.2 << "\n";
+  std::cout << "\033[1;33m[SEAL][BFV] " << " t        = " << "\033[0m"<< parms.plain_modulus().value() << "\n\n";
+
   /* Attack */
 
   int generated_ciphertexts=0;
@@ -202,6 +213,15 @@ void strategy0(bool verbose){
       }
     }
   }
+
+  if(verbose){
+    std::cout << "\033[7;33m> Parameters of the scheme <\033[0m" << "\n";
+    std::cout << "\033[1;33m[SEAL][BFV] " << " n        = " << "\033[0m"<< n << "\n";
+    std::cout << "\033[1;33m[SEAL][BFV] " << " log_2(q) = " << "\033[0m"<< log2(q) << "\n";
+    std::cout << "\033[1;33m[SEAL][BFV] " << " sigma    = " << "\033[0m"<< 3.2 << "\n";
+    std::cout << "\033[1;33m[SEAL][BFV] " << " t        = " << "\033[0m"<< parms.plain_modulus().value() << "\n\n";
+  }
+
   std::cout << "\033[7;33m> " << ciphertexts_which_noise_has_been_found << " linear equations have been found! <\033[0m" << "\n";
   std::cout << "\033[1;33m[SEAL][BFV] " << "number of ciphertexts generated: " << "\033[0m"<< generated_ciphertexts << "\n";
   std::cout << "\033[1;33m[SEAL][BFV] " << "number of noiseless samples: " << "\033[0m"<< number_of_noiseless << "/" << generated_ciphertexts << "\n";
@@ -226,17 +246,17 @@ void strategy1(bool verbose){
     sec_level = sec_level_type::tc192;
   if(SECURITY_LEVEL==256)
     sec_level = sec_level_type::tc256;
-  cout << "Security Level: " << SECURITY_LEVEL << endl; 
+  if(DEBUG) cout << "Security Level: " << SECURITY_LEVEL << endl;
   
   parms.set_coeff_modulus(CoeffModulus::BFVDefault(POLY_MODULUS_DEGREE, sec_level));
   parms.set_plain_modulus(PLAIN_MODULUS);
   SEALContext context(parms, false, sec_level);
   
-  cout << "Set encryption parameters and print" << endl;
-  print_parameters(context);
-  cout << "Parameter validation (success): " << context.parameter_error_message() << endl;
-    cout << "Security Level: " << SECURITY_LEVEL << endl; 
-    
+  if(DEBUG){
+    cout << "Set encryption parameters and print" << endl;
+    print_parameters(context);
+    cout << "Parameter validation (success): " << context.parameter_error_message() << endl;
+  }
   uint64_t n = parms.poly_modulus_degree();
   uint128_t q;
   uint128_t coeff_modulus_q0;
@@ -252,9 +272,11 @@ void strategy1(bool verbose){
     q = ((uint128_t)1) <<58;
     coeff_modulus_q0 = 0x3ffffffff040001;
   }
-  cout<< "n = "<< n <<"\n";
-  cout<< "q = "<< q <<"\n";
-  cout<< "coeff_modulus_q0 = "<< coeff_modulus_q0 <<"\n\n";
+  if(DEBUG){
+    cout<< "n = "<< n <<"\n";
+    cout<< "q = "<< q <<"\n";
+    cout<< "coeff_modulus_q0 = "<< coeff_modulus_q0 <<"\n\n";
+  }
   //SECURITY 256 - { 4096, { 0x3ffffffff040001 } },
   //SECURITY 192 - { 4096, { 0x1ffc001, 0x1fce001, 0x1fc0001 } },
   //SECURITY 128 - { 4096, { 0xffffee001, 0xffffc4001, 0x1ffffe0001 } },
@@ -269,6 +291,14 @@ void strategy1(bool verbose){
   Encryptor encryptor(context, public_key);
   Evaluator evaluator(context);
   Decryptor decryptor(context, secret_key);
+
+  /* Parameters of the scheme */
+
+  std::cout << "\033[7;33m> Parameters of the scheme <\033[0m" << "\n";
+  std::cout << "\033[1;33m[SEAL][BFV] " << " n        = " << "\033[0m"<< n << "\n";
+  std::cout << "\033[1;33m[SEAL][BFV] " << " log_2(q) = " << "\033[0m"<< log2(q) << "\n";
+  std::cout << "\033[1;33m[SEAL][BFV] " << " sigma    = " << "\033[0m"<< 3.2 << "\n";
+  std::cout << "\033[1;33m[SEAL][BFV] " << " t        = " << "\033[0m"<< parms.plain_modulus().value() << "\n\n";
 
   /* Attack */
   
@@ -317,6 +347,14 @@ void strategy1(bool verbose){
     }
   }
 
+  if(verbose){
+    std::cout << "\033[7;33m> Parameters of the scheme <\033[0m" << "\n";
+    std::cout << "\033[1;33m[SEAL][BFV] " << " n        = " << "\033[0m"<< n << "\n";
+    std::cout << "\033[1;33m[SEAL][BFV] " << " log_2(q) = " << "\033[0m"<< log2(q) << "\n";
+    std::cout << "\033[1;33m[SEAL][BFV] " << " sigma    = " << "\033[0m"<< 3.2 << "\n";
+    std::cout << "\033[1;33m[SEAL][BFV] " << " t        = " << "\033[0m"<< parms.plain_modulus().value() << "\n\n";
+  }
+
   std::cout << "\033[7;33m> " << ciphertexts_which_noise_has_been_found << " linear equations have been found! <\033[0m" << "\n";
   std::cout << "\033[1;33m[SEAL][BFV] " << "number of ciphertexts generated: " << "\033[0m"<< generated_ciphertexts << "\n";
   std::cout << "\033[1;33m[SEAL][BFV] " << "number of evaluations: " << "\033[0m"<< number_of_evaluations << "\n";
@@ -333,10 +371,11 @@ void example_bfv_basics(){
 
   parms.set_plain_modulus(1024);
   SEALContext context(parms);
-  cout << "Set encryption parameters and print" << endl;
-  print_parameters(context);
-
-  cout << "Parameter validation (success): " << context.parameter_error_message() << endl;
+  if(DEBUG){
+    cout << "Set encryption parameters and print" << endl;
+    print_parameters(context);
+    cout << "Parameter validation (success): " << context.parameter_error_message() << endl;
+  }
 
   KeyGenerator keygen(context);
   SecretKey secret_key = keygen.secret_key();
