@@ -296,7 +296,7 @@ std::vector<int> compute_noise(int a0, int a1, int& noise)
   }
 }
 
-void test_cpad(uint64_t plain_mod, int64_t pt_msg, int n_samples, bool print_info)
+void test_cpad(uint64_t plain_mod, int64_t pt_msg, int n_samples, bool print_info, bool verbose)
 {
   cout << "************************" << endl;
   cout << "**** test tfhe cpad ****" << endl;
@@ -342,7 +342,7 @@ void test_cpad(uint64_t plain_mod, int64_t pt_msg, int n_samples, bool print_inf
   delete_gate_bootstrapping_parameters(params);
 }
 
-void test_cpad_simple(uint64_t plain_mod, int64_t pt_msg, bool print_info)
+void test_cpad_simple(uint64_t plain_mod, int64_t pt_msg, bool print_info, bool verbose)
 {
   cout << "************************" << endl;
   cout << "**** test tfhe cpad ****" << endl;
@@ -417,7 +417,7 @@ void test_cpad_simple(uint64_t plain_mod, int64_t pt_msg, bool print_info)
         ct_noise.push_back(noise);
         alpha_zero = alpha;
         ++i;
-        print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), true, false, false, i, n);
+        if(verbose) print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), true, false, false, i, n);
       }
       else {
         //To see if ct noise and ct_out noise have the same sign, we add the ciphertexts and try to decrypt.
@@ -435,10 +435,10 @@ void test_cpad_simple(uint64_t plain_mod, int64_t pt_msg, bool print_info)
           ct_out.push_back(ct);
           ct_noise.push_back(noise);
           ++i;
-          print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), true, false, false, i, n);
+          if(verbose) print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), true, false, false, i, n);
         } else {
           //Sign mismatch
-          print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), false, false, false, i, n);
+          if(verbose) print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), false, false, false, i, n);
         }
       }
     }
@@ -449,12 +449,12 @@ void test_cpad_simple(uint64_t plain_mod, int64_t pt_msg, bool print_info)
         ct_out.push_back(ct);
         ct_noise.push_back(noise);
         ++i;
-        print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), true, false, false, i, n);
+        if(verbose) print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), true, false, false, i, n);
       }
     }
     if(ret.size() > 1){
       // Found an interval for the noise value
-      print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), true, false, false, i, n);
+      if(verbose) print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), true, false, false, i, n);
     }
   }
 
