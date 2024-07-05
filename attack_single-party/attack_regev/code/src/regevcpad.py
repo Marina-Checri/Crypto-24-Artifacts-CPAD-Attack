@@ -118,6 +118,12 @@ def print_attack_progress(lib, scheme, true_noise, found_noise, found_noise_size
 # Search n linear equations for the LWE coefficient of a ciphertext,
 # where  b' = <a',s> + |e'| such that e and e' have the same sign.
 def strategy0(reg, verbose):
+    print("\033[7;33m> Parameters of the scheme <\033[0m")
+    print(f"\033[1;33m[In-house lib][Regev]  n        = \033[0m{reg.n}")
+    print(f"\033[1;33m[In-house lib][Regev]  log_2(q) = \033[0m{math.log2(reg.q):.2f}")
+    print(f"\033[1;33m[In-house lib][Regev]  sigma    = \033[0m{reg.s:.1f}")
+    print(f"\033[1;33m[In-house lib][Regev]  t        = \033[0m{2}\n")
+
     N = 0
     M = 1
     c0 = reg.encrypt(0)
@@ -166,6 +172,13 @@ def strategy0(reg, verbose):
                 if(verbose):
                     print_attack_progress('In-house lib', 'Regev', real_noise_1, str(e1), len(e1), False, False, False, N, reg.n)
 
+    if(verbose):
+        print("\n\033[7;33m> Parameters of the scheme <\033[0m")
+        print(f"\033[1;33m[In-house lib][Regev]  n        = \033[0m{reg.n}")
+        print(f"\033[1;33m[In-house lib][Regev]  log_2(q) = \033[0m{math.log2(reg.q):.2f}")
+        print(f"\033[1;33m[In-house lib][Regev]  sigma    = \033[0m{reg.s:.1f}")
+        print(f"\033[1;33m[In-house lib][Regev]  t        = \033[0m{2}\n")
+
     print(f'\033[7;33m> {N} linear equations have been found! <\033[0m');
     print(f'\033[1;33m[In-house lib][Regev] number of ciphertexts generated: \033[0m {M}');
 
@@ -173,6 +186,12 @@ def strategy0(reg, verbose):
 # Find n noiseless LWE coefficients of different ciphertexts
 # to get n linear equations b = <a,s>.
 def strategy1(reg, verbose):
+    print("\033[7;33m> Parameters of the scheme <\033[0m")
+    print(f"\033[1;33m[In-house lib][Regev]  n        = \033[0m{reg.n}")
+    print(f"\033[1;33m[In-house lib][Regev]  log_2(q) = \033[0m{math.log2(reg.q):.2f}")
+    print(f"\033[1;33m[In-house lib][Regev]  sigma    = \033[0m{reg.s:.1f}")
+    print(f"\033[1;33m[In-house lib][Regev]  t        = \033[0m{2}\n")
+
     M = 0
     N = 0
     while N < reg.n:
@@ -190,6 +209,14 @@ def strategy1(reg, verbose):
         if(verbose):
             print_attack_progress('In-house lib', 'Regev', real_noise_1, str(e1), len(e1), True, False, False, N, reg.n)
         N = N + 1
+
+    if(verbose):
+        print("\n\033[7;33m> Parameters of the scheme <\033[0m")
+        print(f"\033[1;33m[In-house lib][Regev]  n        = \033[0m{reg.n}")
+        print(f"\033[1;33m[In-house lib][Regev]  log_2(q) = \033[0m{math.log2(reg.q):.2f}")
+        print(f"\033[1;33m[In-house lib][Regev]  sigma    = \033[0m{reg.s:.1f}")
+        print(f"\033[1;33m[In-house lib][Regev]  t        = \033[0m{2}\n")
+
     print(f'\033[7;33m> {N} linear equations have been found! <\033[0m');
     print(f'\033[1;33m[In-house lib][Regev] number of ciphertexts generated: \033[0m {M}');
 
@@ -203,11 +230,11 @@ def main():
     #Toy params
     #reg=Regev(10,127,7)
     # Weak TFHE params
-    reg=Regev(636,2**32,2**17)
+    #reg=Regev(636,2**32,2**17)
     # TFHE params
     #reg=Regev(1024,2**32,2**17)
     # OpenFHE's params
-    #reg=Regev(8192,2**240,3.19)
+    reg=Regev(8192,2**240,3.19)
     #reg.print()
 
     for i in range(10):
