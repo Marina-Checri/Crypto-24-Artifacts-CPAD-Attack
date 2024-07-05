@@ -372,9 +372,17 @@ void test_cpad_simple(uint64_t plain_mod, int64_t pt_msg, bool print_info, bool 
      const double max_stdev = 0.25; //max standard deviation for a 2 msg space
 */
 
-  cout << "Parameters.\n";
-  cout << "Lwe sample dimension n: " << n << endl;
-  cout << "Noise standard deviation: " << ks_stdev << endl;
+  //cout << "Parameters.\n";
+  //cout << "Lwe sample dimension n: " << n << endl;
+  //cout << "Noise standard deviation: " << ks_stdev << endl;
+
+  //Parameters of the scheme
+
+  std::cout << "\033[7;33m> Parameters of the scheme <\033[0m" << "\n";
+  std::cout << "\033[1;33m[tfheLib][TFHE] " << " n        = " << "\033[0m"<< n << "\n";
+  std::cout << "\033[1;33m[tfheLib][TFHE] " << " log_2(q) = " << "\033[0m"<< 32 << "\n";
+  std::cout << "\033[1;33m[tfheLib][TFHE] " << " sigma    = " << "\033[0m"<< ks_stdev << "\n";
+  std::cout << "\033[1;33m[tfheLib][TFHE] " << " t        = " << "\033[0m"<< plain_mod << "\n\n";
 
   LweParams* lwe_params = new_LweParams(n, ks_stdev, max_stdev);
   TfheGarbageCollector::register_param(lwe_params);
@@ -456,6 +464,14 @@ void test_cpad_simple(uint64_t plain_mod, int64_t pt_msg, bool print_info, bool 
       // Found an interval for the noise value
       if(verbose) print_attack_progress("TFHE", to_string(phase), found_noise_to_string(ret), ret.size(), true, false, false, i, n);
     }
+  }
+
+  if(verbose){
+    std::cout << "\033[7;33m> Parameters of the scheme <\033[0m" << "\n";
+    std::cout << "\033[1;33m[tfheLib][TFHE] " << " n        = " << "\033[0m"<< n << "\n";
+    std::cout << "\033[1;33m[tfheLib][TFHE] " << " log_2(q) = " << "\033[0m"<< 32 << "\n";
+    std::cout << "\033[1;33m[tfheLib][TFHE] " << " sigma    = " << "\033[0m"<< ks_stdev << "\n";
+    std::cout << "\033[1;33m[tfheLib][TFHE] " << " t        = " << "\033[0m"<< plain_mod << "\n\n";
   }
 
   cout << "\033[7;33m> " << i << " linear equations have been found! <\033[0m" << "\n";
