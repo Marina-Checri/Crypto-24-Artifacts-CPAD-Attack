@@ -5,7 +5,7 @@ static uint64_t number_of_evaluations = 0;
 static uint64_t number_of_decryptions = 0;
 
 
-void bgv_strategy0(){
+void bgv_strategy0(bool verbose){
 
   std::cout << "\n*********************************************\n"
        << "**************** STRATEGY 0 *****************"
@@ -72,10 +72,8 @@ void bgv_strategy0(){
     ++generated_ciphertexts;
     std::vector<std::pair<uint128_t, Ciphertext<DCRTPoly>>> aca0;
     std::pair<NativeInteger, NativeInteger> noise_and_modulus =  bgv_get_secret_noise(cc, c0, keyPair.secretKey);
-    print_noise(std::get<0>(noise_and_modulus), std::get<1>(noise_and_modulus), Scheme::BGV);
-
     std::vector<uint64_t> e0 = noiseAbsEstim(cc, keyPair, q, q, c0, aca0);
-    print_found_absolute_noise("e0", e0);
+
     while (e0.size()>1 || e0[0] == 0){
         c0 = cc->Encrypt(keyPair.publicKey, pt);   
         ++generated_ciphertexts;
@@ -90,7 +88,7 @@ void bgv_strategy0(){
     string_true_noise = true_noise_to_string(std::get<0>(noise_and_modulus), std::get<1>(noise_and_modulus), Scheme::BGV);
     string_found_noise = found_noise_to_string(e0);
     correct_noise = is_correct_noise(std::get<0>(noise_and_modulus), e0, std::get<1>(noise_and_modulus), false);
-    print_attack_progress("BGV", string_true_noise, string_found_noise, e0.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
+    if(verbose) print_attack_progress("BGV", string_true_noise, string_found_noise, e0.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
 
     if(CHECK_FOUND_NOISE){
       if(correct_noise){
@@ -133,7 +131,7 @@ void bgv_strategy0(){
           string_true_noise = true_noise_to_string(std::get<0>(noise_and_modulus), std::get<1>(noise_and_modulus), Scheme::BGV);
           string_found_noise = found_noise_to_string(e1);
           correct_noise = is_correct_noise(std::get<0>(noise_and_modulus), e1, std::get<1>(noise_and_modulus), false);
-          print_attack_progress("BGV", string_true_noise, string_found_noise, e1.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
+          if(verbose) print_attack_progress("BGV", string_true_noise, string_found_noise, e1.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
             
           if(CHECK_FOUND_NOISE){
             if(correct_noise){
@@ -164,7 +162,7 @@ void bgv_strategy0(){
           string_true_noise = true_noise_to_string(std::get<0>(noise_and_modulus), std::get<1>(noise_and_modulus), Scheme::BGV);
           string_found_noise = found_noise_to_string(e1);
           correct_noise = is_correct_noise(std::get<0>(noise_and_modulus), e1, std::get<1>(noise_and_modulus), false);
-          print_attack_progress("BGV", string_true_noise, string_found_noise, e1.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
+          if(verbose) print_attack_progress("BGV", string_true_noise, string_found_noise, e1.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
 
           if(CHECK_FOUND_NOISE){
             if(correct_noise){
@@ -182,7 +180,7 @@ void bgv_strategy0(){
           string_true_noise = true_noise_to_string(std::get<0>(noise_and_modulus), std::get<1>(noise_and_modulus), Scheme::BGV);
           string_found_noise = found_noise_to_string(e1);
           correct_noise = is_correct_noise(std::get<0>(noise_and_modulus), e1, std::get<1>(noise_and_modulus), false);
-          print_attack_progress("BGV", string_true_noise, string_found_noise, e1.size(), false, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, n);
+          if(verbose) print_attack_progress("BGV", string_true_noise, string_found_noise, e1.size(), false, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, n);
 
           if(CHECK_FOUND_NOISE){
             if(correct_noise){
@@ -294,7 +292,7 @@ std::vector<uint64_t> noiseAbsEstim(CryptoContext<DCRTPoly>& cc, KeyPair<DCRTPol
     if ( (((uint128_t)1)<<k) > q){
       aca.clear();
       aca.push_back(make_pair(a,ca));
-      std::cout << "k=" << k <<", 2^k="<< (((uint128_t)1)<<k) << ", q=" <<q<<"\n";
+      //std::cout << "k=" << k <<", 2^k="<< (((uint128_t)1)<<k) << ", q=" <<q<<"\n";
       return {0}; // If we cannot switch to 1, noise is 0
       break;
     }

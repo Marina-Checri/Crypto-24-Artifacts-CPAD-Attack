@@ -12,7 +12,7 @@ enum Scheme {
     BGV
 };
 
-#define DEBUG 1
+#define DEBUG 0
 #define CHECK_FOUND_NOISE 1
 
 #define RING_DIMENSION 8192//16384

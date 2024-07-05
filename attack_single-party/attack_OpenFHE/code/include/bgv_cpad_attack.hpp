@@ -21,7 +21,7 @@ using namespace std::chrono_literals;
 /** Functions Prototypes **/
 
 // Find the noise of one coefficient of a ciphertext c0 to get an equation b = <a,s> + |e| of this LWE coefficient. Search n linear equations for the LWE coefficient of a ciphertext, where  b' = <a',s> + |e'| such that e and e' have the same sign.
-void bgv_strategy0();
+void bgv_strategy0(bool verbose=true);
 
 /* Other useful functions */
 

@@ -5,7 +5,7 @@ static uint64_t number_of_evaluations = 0;
 static uint64_t number_of_decryptions = 0;
 
 
-void bfv_strategy0(){
+void bfv_strategy0(bool verbose){
   std::cout << "\n*********************************************\n"
        << "**************** STRATEGY 0 *****************"
        << "\n*********************************************\n\n";
@@ -127,7 +127,7 @@ void bfv_strategy0(){
     string_true_noise = true_noise_to_string(std::get<0>(noise_and_modulus), std::get<1>(noise_and_modulus));
     string_found_noise = found_noise_to_string(e0);
     correct_noise = is_correct_noise(std::get<0>(noise_and_modulus), e0, std::get<1>(noise_and_modulus), false);
-    print_attack_progress("BFV", string_true_noise, string_found_noise, e0.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
+    if(verbose) print_attack_progress("BFV", string_true_noise, string_found_noise, e0.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
 
     if(CHECK_FOUND_NOISE){
       if(correct_noise){
@@ -171,7 +171,7 @@ void bfv_strategy0(){
           string_true_noise = true_noise_to_string(std::get<0>(noise_and_modulus), std::get<1>(noise_and_modulus));
           string_found_noise = found_noise_to_string(e1);
           correct_noise = is_correct_noise(std::get<0>(noise_and_modulus), e1, std::get<1>(noise_and_modulus), false);
-          print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
+          if(verbose) print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
 
           if(CHECK_FOUND_NOISE){
             if(correct_noise){
@@ -204,7 +204,7 @@ void bfv_strategy0(){
           string_true_noise = true_noise_to_string(std::get<0>(noise_and_modulus), std::get<1>(noise_and_modulus));
           string_found_noise = found_noise_to_string(e1);
           correct_noise = is_correct_noise(std::get<0>(noise_and_modulus), e1, std::get<1>(noise_and_modulus), false);
-          print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
+          if(verbose) print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), true,CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found+1, n);
 
           if(CHECK_FOUND_NOISE){
             if(correct_noise){
@@ -223,7 +223,7 @@ void bfv_strategy0(){
           string_true_noise = true_noise_to_string(std::get<0>(noise_and_modulus), std::get<1>(noise_and_modulus));
           string_found_noise = found_noise_to_string(e1);
           correct_noise = is_correct_noise(std::get<0>(noise_and_modulus), e1, std::get<1>(noise_and_modulus), false);
-          print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), false, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, n);
+          if(verbose) print_attack_progress("BFV", string_true_noise, string_found_noise, e1.size(), false, CHECK_FOUND_NOISE, correct_noise, ciphertexts_which_noise_has_been_found, n);
 
           if(CHECK_FOUND_NOISE){
             if(correct_noise){
@@ -334,7 +334,7 @@ std::vector<uint64_t> noiseAbsEstim(CryptoContext<DCRTPoly>& cc, KeyPair<DCRTPol
     if ( (((uint128_t)1)<<k) > q){
       aca.clear();
       aca.push_back(make_pair(a,ca));
-      std::cout << "k=" << k <<", 2^k="<< (((uint128_t)1)<<k) << ", q=" <<q<<"\n";
+      //std::cout << "k=" << k <<", 2^k="<< (((uint128_t)1)<<k) << ", q=" <<q<<"\n";
       return {0}; // If we cannot switch to 1, noise is 0
       break;
     }
