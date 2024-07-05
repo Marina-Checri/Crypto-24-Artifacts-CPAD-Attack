@@ -86,6 +86,14 @@ void bfv_strategy0(bool verbose){
 
     if(DEBUG) std::cout << "Key generation: done\n";
 
+    // Parameters of the scheme
+
+    std::cout << "\033[7;33m> Parameters of the scheme <\033[0m" << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV] " << " n        = " << "\033[0m"<< cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2 << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV] " << " log_2(q) = " << "\033[0m"<< log2(cc->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble()) << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV] " << " sigma    = " << "\033[0m"<< 3.19 << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV] " << " t        = " << "\033[0m"<< cc->GetCryptoParameters()->GetPlaintextModulus() << "\n\n";
+
     ////////////////////////////////////////////////////////////
     // Attack
     ////////////////////////////////////////////////////////////
@@ -236,6 +244,15 @@ void bfv_strategy0(bool verbose){
       }
     }
   }
+
+  if(verbose){
+    std::cout << "\033[7;33m> Parameters of the scheme <\033[0m" << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV] " << " n        = " << "\033[0m"<< cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2 << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV] " << " log_2(q) = " << "\033[0m"<< log2(cc->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble()) << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV] " << " sigma    = " << "\033[0m"<< 3.19 << "\n";
+    std::cout << "\033[1;33m[OpenFHE][BFV] " << " t        = " << "\033[0m"<< cc->GetCryptoParameters()->GetPlaintextModulus() << "\n\n";
+  }
+
   std::cout << "\033[7;33m> " << ciphertexts_which_noise_has_been_found << " linear equations have been found! <\033[0m" << "\n";
   std::cout << "\033[1;33m[OpenFHE][BFV] " << "number of ciphertexts generated: " << "\033[0m"<< generated_ciphertexts << "\n";
   std::cout << "\033[1;33m[OpenFHE][BFV] " << "number of noiseless samples: " << "\033[0m"<< number_of_noiseless << "/" << generated_ciphertexts << "\n";
