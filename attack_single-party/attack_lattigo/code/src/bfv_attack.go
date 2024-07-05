@@ -76,16 +76,18 @@ func strategy0(verbose bool) {
 	q := params.Q()[0]
 	t := params.PlaintextModulus()
 
-	fmt.Println("BFV Parameters:")
-	fmt.Printf("params: %v\n\n", params)
-	fmt.Printf("N: %v\n", params.N())
-	fmt.Printf("Modulus q = %v\n", params.Q())
-	fmt.Printf("log_2(q) = %v\n", params.LogQ())
-	fmt.Printf("Modulus p = %v\n", params.P())
-	fmt.Printf("log_2(p) = %v\n", params.LogP())
-	fmt.Printf("log_2(qp) = %v\n", params.LogQP())
-	fmt.Printf("Modulus q0 = %v\n", q)
-	fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
+	if DEBUG {
+		fmt.Println("BFV Parameters:")
+		fmt.Printf("params: %v\n\n", params)
+		fmt.Printf("N: %v\n", params.N())
+		fmt.Printf("Modulus q = %v\n", params.Q())
+		fmt.Printf("log_2(q) = %v\n", params.LogQ())
+		fmt.Printf("Modulus p = %v\n", params.P())
+		fmt.Printf("log_2(p) = %v\n", params.LogP())
+		fmt.Printf("log_2(qp) = %v\n", params.LogQP())
+		fmt.Printf("Modulus q0 = %v\n", q)
+		fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
+	}
 
 	// Key Generation
 	if verbose {
@@ -101,6 +103,14 @@ func strategy0(verbose bool) {
 	evaluator := heint.NewEvaluator(params, nil)
 
 	level := params.MaxLevel()
+
+	// Parameters of the scheme
+
+	fmt.Printf("\033[7;33m> Parameters of the scheme <\033[0m\n")
+	fmt.Printf("\033[1;33m[Lattigo][BFV] n        = \033[0m%d\n", params.N())
+	fmt.Printf("\033[1;33m[Lattigo][BFV] log_2(q) = \033[0m%.2f\n", params.LogQP())
+	fmt.Printf("\033[1;33m[Lattigo][BFV] sigma    = \033[0m%.1f\n", 3.2)
+	fmt.Printf("\033[1;33m[Lattigo][BFV] t        = \033[0m%d\n\n", t)
 
 	// Attack
 
@@ -273,6 +283,15 @@ func strategy0(verbose bool) {
 			}
 		}
 	}
+
+	if verbose {
+		fmt.Printf("\033[7;33m> Parameters of the scheme <\033[0m\n")
+		fmt.Printf("\033[1;33m[Lattigo][BFV] n        = \033[0m%d\n", params.N())
+		fmt.Printf("\033[1;33m[Lattigo][BFV] log_2(q) = \033[0m%.2f\n", params.LogQP())
+		fmt.Printf("\033[1;33m[Lattigo][BFV] sigma    = \033[0m%.1f\n", 3.2)
+		fmt.Printf("\033[1;33m[Lattigo][BFV] t        = \033[0m%d\n\n", t)
+	}
+
 	fmt.Printf("\033[7;33m> %d linear equations have been found! <\033[0m\n", ciphertexts_which_noise_has_been_found)
 	fmt.Printf("\033[1;33m[Lattigo][BFV] number of ciphertexts generated: \033[0m%d\n", generated_ciphertexts)
 	fmt.Printf("\033[1;33m[Lattigo][BFV] number of noiseless samples: \033[0m%d/%d\n", number_of_noiseless, generated_ciphertexts)
@@ -313,16 +332,18 @@ func strategy1(verbose bool) {
 	q := params.Q()[0]
 	t := params.PlaintextModulus()
 
-	fmt.Println("BFV Parameters:")
-	fmt.Printf("params: %v\n\n", params)
-	fmt.Printf("N: %v\n", params.N())
-	fmt.Printf("Modulus q = %v\n", params.Q())
-	fmt.Printf("log_2(q) = %v\n", params.LogQ())
-	fmt.Printf("Modulus p = %v\n", params.P())
-	fmt.Printf("log_2(p) = %v\n", params.LogP())
-	fmt.Printf("log_2(qp) = %v\n", params.LogQP())
-	fmt.Printf("Modulus q0 = %v\n", q)
-	fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
+	if DEBUG {
+		fmt.Println("BFV Parameters:")
+		fmt.Printf("params: %v\n\n", params)
+		fmt.Printf("N: %v\n", params.N())
+		fmt.Printf("Modulus q = %v\n", params.Q())
+		fmt.Printf("log_2(q) = %v\n", params.LogQ())
+		fmt.Printf("Modulus p = %v\n", params.P())
+		fmt.Printf("log_2(p) = %v\n", params.LogP())
+		fmt.Printf("log_2(qp) = %v\n", params.LogQP())
+		fmt.Printf("Modulus q0 = %v\n", q)
+		fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
+	}
 
 	// Key Generation
 	if verbose {
@@ -338,6 +359,14 @@ func strategy1(verbose bool) {
 	evaluator := heint.NewEvaluator(params, nil)
 
 	level := params.MaxLevel()
+
+	// Parameters of the scheme
+
+	fmt.Printf("\033[7;33m> Parameters of the scheme <\033[0m\n")
+	fmt.Printf("\033[1;33m[Lattigo][BFV] n        = \033[0m%d\n", params.N())
+	fmt.Printf("\033[1;33m[Lattigo][BFV] log_2(q) = \033[0m%.2f\n", params.LogQP())
+	fmt.Printf("\033[1;33m[Lattigo][BFV] sigma    = \033[0m%.1f\n", 3.2)
+	fmt.Printf("\033[1;33m[Lattigo][BFV] t        = \033[0m%d\n\n", t)
 
 	// Attack
 
@@ -392,6 +421,13 @@ func strategy1(verbose bool) {
 				number_of_noiseless = number_of_noiseless + 1
 			}
 		}
+	}
+	if verbose {
+		fmt.Printf("\033[7;33m> Parameters of the scheme <\033[0m\n")
+		fmt.Printf("\033[1;33m[Lattigo][BFV] n        = \033[0m%d\n", params.N())
+		fmt.Printf("\033[1;33m[Lattigo][BFV] log_2(q) = \033[0m%.2f\n", params.LogQP())
+		fmt.Printf("\033[1;33m[Lattigo][BFV] sigma    = \033[0m%.1f\n", 3.2)
+		fmt.Printf("\033[1;33m[Lattigo][BFV] t        = \033[0m%d\n\n", t)
 	}
 
 	fmt.Printf("\033[7;33m> %d linear equations have been found! <\033[0m\n", ciphertexts_which_noise_has_been_found)
@@ -448,16 +484,18 @@ func strategy2(verbose bool) {
 	q := params.Q()[0]
 	t := params.PlaintextModulus()
 
-	fmt.Println("BFV Parameters:")
-	fmt.Printf("params: %v\n\n", params)
-	fmt.Printf("N: %v\n", params.N())
-	fmt.Printf("Modulus q = %v\n", params.Q())
-	fmt.Printf("log_2(q) = %v\n", params.LogQ())
-	fmt.Printf("Modulus p = %v\n", params.P())
-	fmt.Printf("log_2(p) = %v\n", params.LogP())
-	fmt.Printf("log_2(qp) = %v\n", params.LogQP())
-	fmt.Printf("Modulus q0 = %v\n", q)
-	fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
+	if DEBUG {
+		fmt.Println("BFV Parameters:")
+		fmt.Printf("params: %v\n\n", params)
+		fmt.Printf("N: %v\n", params.N())
+		fmt.Printf("Modulus q = %v\n", params.Q())
+		fmt.Printf("log_2(q) = %v\n", params.LogQ())
+		fmt.Printf("Modulus p = %v\n", params.P())
+		fmt.Printf("log_2(p) = %v\n", params.LogP())
+		fmt.Printf("log_2(qp) = %v\n", params.LogQP())
+		fmt.Printf("Modulus q0 = %v\n", q)
+		fmt.Printf("Plainmodulus = %v\n\n", params.PlaintextModulus())
+	}
 
 	// Key Generation
 	if verbose {
@@ -473,6 +511,14 @@ func strategy2(verbose bool) {
 	evaluator := heint.NewEvaluator(params, nil)
 
 	level := params.MaxLevel()
+
+	// Parameters of the scheme
+
+	fmt.Printf("\033[7;33m> Parameters of the scheme <\033[0m\n")
+	fmt.Printf("\033[1;33m[Lattigo][BFV] n        = \033[0m%d\n", params.N())
+	fmt.Printf("\033[1;33m[Lattigo][BFV] log_2(q) = \033[0m%.2f\n", params.LogQP())
+	fmt.Printf("\033[1;33m[Lattigo][BFV] sigma    = \033[0m%.1f\n", 3.2)
+	fmt.Printf("\033[1;33m[Lattigo][BFV] t        = \033[0m%d\n\n", t)
 
 	// Attack
 
@@ -747,6 +793,14 @@ func strategy2(verbose bool) {
 				fmt.Printf("Correct noise left -> negative noise.\n")
 			}
 		}
+	}
+
+	if verbose {
+		fmt.Printf("\033[7;33m> Parameters of the scheme <\033[0m\n")
+		fmt.Printf("\033[1;33m[Lattigo][BFV] n        = \033[0m%d\n", params.N())
+		fmt.Printf("\033[1;33m[Lattigo][BFV] log_2(q) = \033[0m%.2f\n", params.LogQP())
+		fmt.Printf("\033[1;33m[Lattigo][BFV] sigma    = \033[0m%.1f\n", 3.2)
+		fmt.Printf("\033[1;33m[Lattigo][BFV] t        = \033[0m%d\n\n", t)
 	}
 
 	fmt.Printf("\033[7;33m> %d linear equations have been found! <\033[0m\n", ciphertexts_which_noise_has_been_found)
